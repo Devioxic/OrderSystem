@@ -55,7 +55,7 @@ button {
     color: var(--primary);
     border: 2px solid var(--primary);
 }
-.order, .historik {
+.order, .historik, .kvitto {
     width: 100%;
     display: flex;
     flex-direction: column;
