@@ -56,7 +56,7 @@ button {
     border: 2px solid var(--primary);
 }
 
-.order {
+.order, .historik {
     width: 100%;
     display: flex;
     flex-direction: column;
