@@ -48,3 +48,39 @@ const menu = {
         {"name": "Fanta 50 cl ", "price":  20 }
     ]
 }
+
+
+document.addEventListener("DOMContentLoaded", function() {
+    var navBar = document.getElementById("nav-bar");
+    var pizza = document.getElementById("pizza");
+    var sauces = document.getElementById("sauces");
+    var soda = document.getElementById("soda");
+
+    function updateUnderline() {
+        var activeCategory;
+
+        if (isElementInViewport(document.getElementById("pizzas"))) {
+            activeCategory = pizza;
+        } else if (isElementInViewport(document.getElementById("sauces"))) {
+            activeCategory = sauces;
+        } else if (isElementInViewport(document.getElementById("drinks"))) {
+            activeCategory = soda;
+        }
+
+        var rect = activeLink.getBoundingClientRect();
+        navBar.style.width = rect.width + "px";
+        navBar.style.left = rect.left + "px";
+    }
+
+    function isElementInViewport(element) {
+        var rect = element.getBoundingClientRect();
+        return (
+            rect.top >= 0 &&
+            rect.left >= 0 &&
+            rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+            rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+        );
+    }
+
+    window.addEventListener("scroll", updateUnderline);
+});
