@@ -8,7 +8,12 @@ body {
     background-color: var(--background);
     color: var(--primary);
     padding: 0;
+    margin: 0;
     font-family: 'Inter';
+}
+
+h1 {
+    font-weight: 600;
 }
 
 .home {
@@ -21,20 +26,21 @@ body {
 }
 
 .home-buttons {
-    height: 8rem;
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    margin-bottom: 1rem;
 }
 
 button {
-    height: 3rem;
+    height: 4rem;
     width: 90%;
     border-radius: 8px;
     cursor: pointer;
     margin: 0.5rem;
+    font-size: 1.2rem;
 }
 
 .button-primary {
