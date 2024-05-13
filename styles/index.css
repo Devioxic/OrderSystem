@@ -86,12 +86,13 @@ header {
 }
 
 .searchbar input {
-    width: 100%;
+    width: calc(100% - 2rem);
     height: 100%;
     border: none;
     border-radius: 8px;
     font-size: 1rem;
     background-color: var(--searchbar);
+    padding: 0 1rem;
 }
 
 .material-symbols-rounded {
