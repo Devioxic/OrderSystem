@@ -1,17 +1,12 @@
-#pizza {
+#pizza {}
 
-}
-ul{
+ul {
     list-style: none;
     width: 100%;
 }
-li{
-    width:100%;
-display: flex;
-justify-content: space-around;
+
+li {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
 }
- 
-    
-
-
- 

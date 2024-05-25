@@ -49,38 +49,74 @@ const menu = {
     ]
 }
 
+const newOrderButton = document.getElementById("newOrder");
+const historyButton = document.getElementById("history");
+const backButtons = document.querySelectorAll(".back-button");
+const orderNavButtons = document.querySelectorAll(".order-nav-button");
+const navBar = document.querySelector(".nav-bar");
 
-document.addEventListener("DOMContentLoaded", function() {
-    var navBar = document.getElementById("nav-bar");
-    var pizza = document.getElementById("pizza");
-    var sauces = document.getElementById("sauces");
-    var soda = document.getElementById("soda");
+const homeDiv = document.querySelector(".home");
+const orderDiv = document.querySelector(".order");
+const receiptDiv = document.querySelector(".kvitto");
+const historyDiv = document.querySelector(".historik");
 
-    function updateUnderline() {
-        var activeCategory;
+let previousPage = null;
+let currentPage = homeDiv;
 
-        if (isElementInViewport(document.getElementById("pizzas"))) {
-            activeCategory = pizza;
-        } else if (isElementInViewport(document.getElementById("sauces"))) {
-            activeCategory = sauces;
-        } else if (isElementInViewport(document.getElementById("drinks"))) {
-            activeCategory = soda;
-        }
+newOrderButton.addEventListener("click", () => {
+    homeDiv.classList.add("page-left");
+    homeDiv.classList.remove("active");
+    orderDiv.classList.add("active");
+    orderDiv.classList.remove("page-right");
 
-        var rect = activeLink.getBoundingClientRect();
-        navBar.style.width = rect.width + "px";
-        navBar.style.left = rect.left + "px";
+    previousPage = homeDiv;
+    currentPage = orderDiv;
+});
+
+historyButton.addEventListener("click", () => {
+    homeDiv.classList.add("page-left");
+    homeDiv.classList.remove("active");
+    historyDiv.classList.add("active");
+    historyDiv.classList.remove("page-right");
+
+    previousPage = homeDiv;
+    currentPage = historyDiv;
+});
+
+backButtons.forEach(button => {
+    button.addEventListener("click", () => {
+        currentPage.classList.add("page-right");
+        currentPage.classList.remove("active");
+        previousPage.classList.add("active");
+        previousPage.classList.remove("page-left");
+
+        currentPage = previousPage;
+    });
+});
+
+function updateNavBarPosition(skipAnimation = false) {
+    if (skipAnimation) {
+        navBar.style.transition = "none";
+    } else {
+        navBar.style.transition = "left 0.3s, width 0.3s";
     }
+    navBar.style.width = `${activeButton.offsetWidth * 1.1}px`;
+    navBar.style.left = `${activeButton.offsetLeft - (activeButton.offsetWidth * 0.05)}px`;
+}
 
-    function isElementInViewport(element) {
-        var rect = element.getBoundingClientRect();
-        return (
-            rect.top >= 0 &&
-            rect.left >= 0 &&
-            rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-            rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-        );
-    }
+let activeButton = document.querySelector(".selected");
+orderNavButtons.forEach(button => {
+    button.addEventListener("click", () => {
+        activeButton.classList.remove("selected");
+        activeButton = button;
+        activeButton.classList.add("selected");
 
-    window.addEventListener("scroll", updateUnderline);
+        updateNavBarPosition(false);
+    });
+});
+
+updateNavBarPosition(true);
+
+window.addEventListener("resize", () => {
+    updateNavBarPosition(true);
 });

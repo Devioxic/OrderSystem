@@ -6,19 +6,179 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OrderSystem</title>
     <link rel="stylesheet" href="styles/index.css">
+    <link rel="stylesheet" href="styles/order.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <script src="scripts/index.js" defer></script>
 </head>
 
 <body>
-    <div class="home">
-        <h1>Startsida</h1>
-        <div class="home-buttons">
-            <button class="button-primary">Ny Order</button>
-            <button class="button-secondary">Historik</button>
+    <div class="container">
+        <div class="home page active">
+            <h1>Startsida</h1>
+            <div class="home-buttons">
+                <button class="button-primary" id="newOrder">Ny Order</button>
+                <button class="button-secondary" id="history">Historik</button>
+            </div>
+        </div>
+        <div class="order page page-right">
+            <header>
+                <i class="material-symbols-rounded back-button">arrow_back</i>
+                <h1>Ny Order</h1>
+            </header>
+            <div class="searchbar">
+                <input type="text" placeholder="Sök">
+            </div>
+            <nav>
+                <div class="nav-buttons">
+                    <p class="selected order-nav-button">Pizzor</p>
+                    <p class="order-nav-button">Dryck</p>
+                    <p class="order-nav-button">Såser</p>
+                </div>
+                <div class="nav-slider">
+                    <div class="nav-bar"></div>
+                </div>
+            </nav>
+            <div class="order-menu">
+                <div class="pizzas menu-active">
+                    <ul class="pizza-list">
+                        <li>
+                            <h2>Pizzors Klass 1</h2>
+                        </li>
+                        <li>
+                            <p> Margherita</p>
+                            <p>65 :-</p>
+                        </li>
+                        <li>
+                            <p> Margherita</p>
+                            <p>65 :-</p>
+                        </li>
+                        <li>
+                            <p> Margherita</p>
+                            <p>65 :-</p>
+                        </li>
+                        <li>
+                            <p> Margherita</p>
+                            <p>65 :-</p>
+                        </li>
+                        <li>
+                            <p> Margherita</p>
+                            <p>65 :-</p>
+                        </li>
+                        <li>
+                            <p> Margherita</p>
+                            <p>65 :-</p>
+                        </li>
+                        <li>
+                            <p> Margherita</p>
+                            <p>65 :-</p>
+                        </li>
+                        <li>
+                            <p> Margherita</p>
+                            <p>65 :-</p>
+                        </li>
+                        <li>
+                            <p> Margherita</p>
+                            <p>65 :-</p>
+                        </li>
+                        <li>
+                            <p> Margherita</p>
+                            <p>65 :-</p>
+                        </li>
+                        <li>
+                            <p> Margherita</p>
+                            <p>65 :-</p>
+                        </li>
+                        <li>
+                            <p> Margherita</p>
+                            <p>65 :-</p>
+                        </li>
+                    </ul>
+                </div>
+                <div class="soda menu-left">
+                    <ul class="soda-list">
+                        <li>
+                            <p>
+                                Coca-Cola 33cl
+                            </p>
+                            <p>
+                                15,00 :-
+                            </p>
+                        </li>
+                        <li>
+                            <p>Coca-Cola Light 33cl</p>
+                            <p>15,00 :-</p>
+                        </li>
+                        <li>
+                            <p>Fanta 33cl</p>
+                            <p>15,00 :-</p>
+                        </li>
+                        <li>
+                            <p>Sprite 33cl</p>
+                            <p>15,00 :-</p>
+                        </li>
+                    </ul>
+                </div>
+                <div class="sauces menu-left">
+                    <ul class="sauces-list">
+                        <li>
+                            <p>Bearnaisesås 10cl</p>
+                            <p>10,00 :-</p>
+                        </li>
+                        <li>
+                            <p>Kebabsås mild 10cl</p>
+                            <p>10,00 :-</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="order-total">
+                <div class="order-amount">
+                    <p>Totalt:</p>
+                    <p>130,00 :-</p>
+                </div>
+                <div class="order-buttons">
+                    <button class="button-secondary">Info</button>
+                    <button class="button-primary">Bekräfta</button>
+                </div>
+            </div>
+        </div>
+        <div class="kvitto page page-right">
+            <header>
+
+                <i class="material-symbols-rounded back-button">arrow_back</i>
+                <h1>Kvitto</h1>
+                <div class="kvitto-order"></div>
+            </header>
+            <div class="kvitto-obj">
+                <h2>Bord 12 6/5-23 20:13</h2>
+                <ul>
+                    <li>1x Vesuvio 65,00:-</li>
+                    <li>1x Altona 65,00:-</li>
+                    <li>2x Fanta 50cl 40,00:-</li>
+                </ul>
+                <hr>
+                <p>Totalt: 170,00:-</p>
+            </div>
+        </div>
+        <div class="historik page page-right">
+        <header>
+            <i class="material-symbols-rounded back-button">arrow_back</i>
+            <h1>Historik</h1>
+        </header>
+        <div class="searchbar">
+            <input type="text" placeholder="Sök">
+        </div>
+        <div class="order-history">
+            <ol>
+
+            </ol>
         </div>
     </div>
+</div>
 </body>
 
 </html>
