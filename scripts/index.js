@@ -81,31 +81,13 @@ let currentPage = homeDiv;
 let activeButton = document.querySelector(".selected");
 let activeSection = document.querySelector(".menu-active");
 let currentOrder = [];
-let recentOrders = [
-    {
-        "Bord": "12",
-        "Produkter": [
-            { "name": "Margherita", "price": 65 },
-            { "name": "Coca-Cola 33 cl", "price": 15 },
-            { "name": "Vesuvio", "price": 65 },
-            { "name": "Fanta 33 cl", "price": 15 },
-            { "name": "Altono", "price": 65 },
-            { "name": "Coca-Cola 33 cl", "price": 15 },
-            { "name": "Princessa", "price": 75 },
-            { "name": "Kebabsås mild 10 cl", "price": 10 },
-            { "name": "Kroppkärr", "price": 75 },
-            { "name": "Coca-Cola 33 cl", "price": 15 }
-        ],
-        "Datumn": "2021-09-01",
-        "Tid": "13:00"
-    }
-];
+let recentOrders = [];
 /*
 recentOrders = [
     {
         "Bord": "12",
         "Produkter": [
-            { "name": "Margherita", "price": 65 },
+            { "name": "Margherita", "price": 65, "specialInstructions": "Ingen ost" },
             { "name": "Coca-Cola 33 cl", "price": 15 }
         ],
         "Datumn": "2021-09-01",
@@ -426,11 +408,57 @@ newOrderButton.addEventListener("click", () => {
     currentPage = orderDiv;
 });
 
+function fillReceipt(order) {
+    const receiptUl = receiptDiv.querySelector("ul");
+    clearElement(receiptUl);
+
+    const h2 = receiptDiv.querySelector("h2");
+
+    h2.textContent = `Bord ${order.Bord} ${order.Datumn} ${order.Tid}`;
+
+    let totalPrice = 0;
+
+    order.Produkter.forEach(item => {
+        const li = document.createElement("li");
+        const name = document.createElement("p");
+        const price = document.createElement("p");
+        const specialInstructions = document.createElement("p");
+        const extraInfo = document.createElement("p");
+        const extraInfoDiv = document.createElement("div");
+        const priceDiv = document.createElement("div");
+
+        specialInstructions.textContent = "Extra info:";
+        extraInfo.textContent = item.specialInstructions;
+
+        extraInfoDiv.appendChild(specialInstructions);
+        extraInfoDiv.appendChild(extraInfo);
+
+        name.textContent = item.name;
+        price.textContent = `${item.price} :-`;
+
+        priceDiv.appendChild(name);
+        priceDiv.appendChild(price);
+
+        li.appendChild(priceDiv);
+        li.appendChild(extraInfoDiv);
+
+        receiptUl.appendChild(li);
+
+        totalPrice += item.price;
+    });
+
+    const totalP = receiptDiv.querySelector(".kvitto-total-p");
+
+    totalP.textContent = `${totalPrice} :-`;
+}
+
 function moveToReceipt(order) {
     historyDiv.classList.add("page-left");
     historyDiv.classList.remove("active");
     receiptDiv.classList.add("active");
     receiptDiv.classList.remove("page-right");
+
+    fillReceipt(order);
 
     previousPage = historyDiv;
     currentPage = receiptDiv;
