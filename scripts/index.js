@@ -1,3 +1,9 @@
+/*
+Jacob Krumlinde
+Theodor Pernevik
+Tilly Persson
+*/
+
 const menu = {
     "pizza_class_1": [
         { "name": "Margherita", "contents": ["Tomatsås", "Ost"], "price": 65 },
