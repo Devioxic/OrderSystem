@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
     <title>OrderSystem</title>
     <link rel="stylesheet" href="styles/index.css">
     <link rel="stylesheet" href="styles/order.css">
@@ -28,6 +29,44 @@
             <div class="confirm-buttons">
                 <button class="button-danger smol-button" id="cancel">Avbryt</button>
                 <button class="button-primary smol-button" id="confirm">Bekräfta</button>
+            </div>
+        </dialog>
+        <dialog class="info-dialog hidden">
+            <div class="info-head">
+                <h2>Order</h2>
+            </div>
+            <div class="info-content">
+                <ul>
+                </ul>
+                <div class="info-total">
+                    <p>Totalt:</p>
+                    <p id="infoTotalText">0,00 :-</p>
+                </div>
+            </div>
+            <div class="table-numbers hidden">
+                <label for="tableNumber">Bordsnummer</label>
+                <select name="tableNumber" id="tableNumber">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                    <option value="13">13</option>
+                    <option value="14">14</option>
+                    <option value="15">15</option>
+                    <option value="16">16</option>
+                </select>
+            </div>
+            <div class="info-buttons">
+                <button class="button-secondary smol-button hidden" id="infoSecondary">Stäng</button>
+                <button class="button-primary smol-button" id="infoPrimary">Stäng</button>
             </div>
         </dialog>
         <div class="home page active">
@@ -58,28 +97,28 @@
             <div class="order-menu">
                 <div class="pizzas menu-active">
                     <ul class="pizza-list">
-                        
+
                     </ul>
                 </div>
                 <div class="soda menu-right">
                     <ul class="soda-list">
-                        
+
                     </ul>
                 </div>
                 <div class="sauces menu-right">
                     <ul class="sauces-list">
-                        
+
                     </ul>
                 </div>
             </div>
             <div class="order-total">
                 <div class="order-amount">
                     <p>Totalt:</p>
-                    <p>0,00 :-</p>
+                    <p id="total-price"">0,00 :-</p>
                 </div>
-                <div class="order-buttons">
-                    <button class="button-secondary">Info</button>
-                    <button class="button-primary">Bekräfta</button>
+                <div class=" order-buttons">
+                        <button class="button-secondary" id="orderInfo">Info</button>
+                        <button class="button-primary" id="orderConfirm">Bekräfta</button>
                 </div>
             </div>
         </div>
@@ -102,20 +141,20 @@
             </div>
         </div>
         <div class="historik page page-right">
-        <header>
-            <i class="material-symbols-rounded back-button">arrow_back</i>
-            <h1>Historik</h1>
-        </header>
-        <div class="searchbar">
-            <input type="text" placeholder="Sök">
-        </div>
-        <div class="order-history">
-            <ol>
-
-            </ol>
+            <header>
+                <i class="material-symbols-rounded back-button history-back">arrow_back</i>
+                <h1>Historik</h1>
+            </header>
+            <div class="searchbar">
+                <input type="text" placeholder="Sök">
+            </div>
+            <div class="order-history">
+                <ul>
+                    
+                </ul>
+            </div>
         </div>
     </div>
-</div>
 </body>
 
 </html>

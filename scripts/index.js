@@ -51,6 +51,8 @@ const menu = {
 
 const newOrderButton = document.getElementById("newOrder");
 const historyButton = document.getElementById("history");
+const orderInfo = document.getElementById("orderInfo");
+const orderConfirm = document.getElementById("orderConfirm");
 const backButtons = document.querySelectorAll(".back-button");
 const orderNavButtons = document.querySelectorAll(".order-nav-button");
 const navBar = document.querySelector(".nav-bar");
@@ -70,12 +72,47 @@ const confirmDialog = document.querySelector(".confirm-dialog");
 const confirmDialogConfirm = confirmDialog.querySelector(".button-primary");
 const confirmDialogCancel = confirmDialog.querySelector(".button-danger");
 
+const infoDialog = document.querySelector(".info-dialog");
+const infoPrimary = document.getElementById("infoPrimary");
+const infoSecondary = document.getElementById("infoSecondary");
+
 let previousPage = null;
 let currentPage = homeDiv;
 let activeButton = document.querySelector(".selected");
 let activeSection = document.querySelector(".menu-active");
 let currentOrder = [];
-
+let recentOrders = [
+    {
+        "Bord": "12",
+        "Produkter": [
+            { "name": "Margherita", "price": 65 },
+            { "name": "Coca-Cola 33 cl", "price": 15 },
+            { "name": "Vesuvio", "price": 65 },
+            { "name": "Fanta 33 cl", "price": 15 },
+            { "name": "Altono", "price": 65 },
+            { "name": "Coca-Cola 33 cl", "price": 15 },
+            { "name": "Princessa", "price": 75 },
+            { "name": "Kebabsås mild 10 cl", "price": 10 },
+            { "name": "Kroppkärr", "price": 75 },
+            { "name": "Coca-Cola 33 cl", "price": 15 }
+        ],
+        "Datumn": "2021-09-01",
+        "Tid": "13:00"
+    }
+];
+/*
+recentOrders = [
+    {
+        "Bord": "12",
+        "Produkter": [
+            { "name": "Margherita", "price": 65 },
+            { "name": "Coca-Cola 33 cl", "price": 15 }
+        ],
+        "Datumn": "2021-09-01",
+        "Tid": "12:00"
+    }
+]
+*/
 /*
 currentOrder = [
     {
@@ -91,6 +128,126 @@ currentOrder = [
 ];
 */
 
+function updateTotalPrice() {
+    const priceElement = document.querySelector("#total-price");
+
+    let totalPrice = 0;
+
+    currentOrder.forEach(item => {
+        totalPrice += item.price;
+    });
+
+    priceElement.textContent = `${totalPrice} :-`;
+}
+
+function confirmOrder() {
+    if (currentOrder.length === 0) {
+        return;
+    }
+
+    const tableNumber = infoDialog.querySelector("select").value;
+
+    recentOrders.push(
+        {
+            "Bord": tableNumber,
+            "Produkter": currentOrder,
+            "Datumn": new Date().toISOString().split("T")[0],
+            "Tid": new Date().toLocaleTimeString().slice(0, 5)
+        }
+    );
+
+    currentOrder = [];
+    updateTotalPrice();
+
+    backButtons[0].click();
+    
+    console.log(recentOrders);
+}
+
+infoPrimary.addEventListener("click", () => {
+    if (infoPrimary.textContent === "Stäng") {
+        infoDialog.classList.add("hidden");
+        return;
+    } else {
+        infoSecondary.classList.add("hidden");
+        infoDialog.classList.add("hidden");
+        infoDialog.querySelector(".table-numbers").classList.add("hidden");
+        confirmOrder();
+    }
+});
+
+infoSecondary.addEventListener("click", () => {
+    infoDialog.classList.add("hidden");
+});
+
+function fillInfoDialog() {
+    clearElement(infoDialog.querySelector("ul"));
+    let totalPrice = 0;
+    currentOrder.forEach(item => {
+        const newLi = document.createElement("li");
+        const newDiv1 = document.createElement("div");
+        const newDiv2 = document.createElement("div");
+        const newDiv3 = document.createElement("div");
+        const name = document.createElement("p");
+        const price = document.createElement("p");
+        const removeButton = document.createElement("button");
+        const extraInfo1 = document.createElement("p");
+        const extraInfo2 = document.createElement("p");
+
+        newDiv1.classList.add("li-row");
+        newDiv2.classList.add("li-right");
+        newDiv3.classList.add("li-row");
+        extraInfo2.classList.add("extra-info-actual");
+
+        name.textContent = item.name;
+        price.textContent = `${item.price} :-`;
+        extraInfo1.textContent = "Extra info:";
+        extraInfo2.textContent = item.specialInstructions;
+        extraInfo2.style.marginRight = "0.25rem";
+        removeButton.textContent = "x";
+        removeButton.classList.add("info-remove");
+
+        removeButton.addEventListener("click", () => {
+            currentOrder.splice(currentOrder.indexOf(item), 1);
+            newLi.remove();
+            updateTotalPrice();
+        });
+
+        newDiv2.appendChild(price);
+        newDiv2.appendChild(removeButton);
+
+        newDiv1.appendChild(name);
+        newDiv1.appendChild(newDiv2);
+
+        newDiv3.appendChild(extraInfo1);
+        newDiv3.appendChild(extraInfo2);
+
+        newLi.appendChild(newDiv1);
+        newLi.appendChild(newDiv3);
+
+        infoDialog.querySelector("ul").appendChild(newLi);
+
+        totalPrice += item.price;
+    });
+
+    document.getElementById("infoTotalText").textContent = `${totalPrice} :-`;
+}
+
+orderInfo.addEventListener("click", () => {
+    fillInfoDialog();
+    infoPrimary.textContent = "Stäng";
+    infoDialog.querySelector(".table-numbers").classList.add("hidden");
+    infoDialog.classList.remove("hidden");
+});
+
+orderConfirm.addEventListener("click", () => {
+    fillInfoDialog();
+    infoPrimary.textContent = "Bekräfta";
+    infoDialog.querySelector(".table-numbers").classList.remove("hidden");
+    infoSecondary.classList.remove("hidden");
+    infoDialog.classList.remove("hidden");
+});
+
 confirmDialogConfirm.addEventListener("click", () => {
     confirmDialog.classList.add("hidden");
     currentOrder.push(
@@ -100,11 +257,33 @@ confirmDialogConfirm.addEventListener("click", () => {
             "specialInstructions": confirmDialog.querySelector("textarea").value
         }
     );
+    updateTotalPrice();
 });
 
 confirmDialogCancel.addEventListener("click", () => {
     confirmDialog.classList.add("hidden");
 });
+
+function parseAllergens(items) {
+    if (!items.contents) {
+        return "";
+    }
+
+    let allergens = ""
+
+    items.contents.forEach(content => {
+        if (content.startsWith("a:")) {
+            const allergen = `<b>${content.slice(2)}</b>, `;
+            allergens += allergen;
+        } else {
+            allergens += `${content}, `;
+        }
+    });
+
+    allergens = allergens.slice(0, -2);
+
+    return allergens;
+}
 
 function findMenuItem(item) {
     const pizzas = menu.pizza_class_1.concat(menu.pizza_class_2, menu.pizza_class_3);
@@ -204,7 +383,7 @@ function loadMenu() {
     const sauceUl = sauces.querySelector("ul");
 
     clearElement(sauceUl);
-    
+
     menu.sauces.forEach(sauce => {
         sauceUl.appendChild(createMenuElement(sauce));
     });
@@ -221,21 +400,15 @@ function loadMenu() {
         item.addEventListener("click", () => {
             const itemName = item.querySelector("p").textContent;
             const menuItem = findMenuItem(itemName);
-            
+
             const dialogName = confirmDialog.querySelector("h2");
             const dialogContents = confirmDialog.querySelector("p");
 
             dialogName.textContent = menuItem.name;
 
-            let contents = "";
-            menuItem.contents.forEach(content => {
-                contents += `${content}, `;
-            });
+            dialogContents.innerHTML = parseAllergens(menuItem); // Not good, but it works
 
-            contents = contents.slice(0, -2);
-
-            dialogContents.textContent = contents;
-
+            confirmDialog.querySelector("textarea").value = "";
             confirmDialog.classList.remove("hidden");
         });
     });
@@ -253,11 +426,66 @@ newOrderButton.addEventListener("click", () => {
     currentPage = orderDiv;
 });
 
+function moveToReceipt(order) {
+    historyDiv.classList.add("page-left");
+    historyDiv.classList.remove("active");
+    receiptDiv.classList.add("active");
+    receiptDiv.classList.remove("page-right");
+
+    previousPage = historyDiv;
+    currentPage = receiptDiv;
+}
+
+function fillHistory() {
+    const historyUl = historyDiv.querySelector("ul");
+    clearElement(historyUl);
+    recentOrders.forEach(order => {
+        console.log(order);
+
+        const li = document.createElement("li");
+        const h2 = document.createElement("h2");
+        const p = document.createElement("p");
+
+        const items = {}
+
+        order.Produkter.forEach(item => {
+            if (items[item.name]) {
+                items[item.name].count++;
+            } else {
+                items[item.name] = { "count": 1, "price": item.price };
+            }
+        });
+
+        let orderString = "";
+
+        for (const [key, value] of Object.entries(items)) {
+            orderString += `x${value.count} ${key}, `;
+        }
+
+        orderString = orderString.slice(0, -2);
+
+        h2.textContent = `Bord ${order.Bord} ${order.Datumn} ${order.Tid}`;
+
+        p.textContent = orderString;
+
+        li.appendChild(h2);
+        li.appendChild(p);
+
+        historyUl.appendChild(li);
+
+        li.addEventListener("click", () => {
+            moveToReceipt(order);
+        });
+    });
+}
+
 historyButton.addEventListener("click", () => {
     homeDiv.classList.add("page-left");
     homeDiv.classList.remove("active");
     historyDiv.classList.add("active");
     historyDiv.classList.remove("page-right");
+
+    fillHistory();
 
     previousPage = homeDiv;
     currentPage = historyDiv;
@@ -273,7 +501,7 @@ function resetOrderSection() {
     activeSection = pizzas;
     activeButton = document.querySelector("#pizza");
     activeButton.classList.add("selected");
-    
+
     removeAllClasses(activeSection);
     activeSection.classList.add("menu-active");
     activeSection.classList.add("pizzas");
@@ -293,6 +521,11 @@ backButtons.forEach(button => {
     button.addEventListener("click", () => {
         currentPage.classList.add("page-right");
         currentPage.classList.remove("active");
+
+        if (button.classList.contains("history-back")) {
+            previousPage = homeDiv;
+        }
+
         previousPage.classList.add("active");
         previousPage.classList.remove("page-left");
 
