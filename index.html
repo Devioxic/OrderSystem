@@ -17,6 +17,19 @@
 
 <body>
     <div class="container">
+        <dialog class="confirm-dialog hidden">
+            <div class="confirm-head">
+                <h2>Namn</h2>
+                <p>Ingridienser</p>
+            </div>
+            <div class="confirm-extraInfo">
+                <textarea name="extraInfo" id="extraInfo" placeholder="Extra information"></textarea>
+            </div>
+            <div class="confirm-buttons">
+                <button class="button-danger smol-button" id="cancel">Avbryt</button>
+                <button class="button-primary smol-button" id="confirm">Bekräfta</button>
+            </div>
+        </dialog>
         <div class="home page active">
             <h1>Startsida</h1>
             <div class="home-buttons">
@@ -30,13 +43,13 @@
                 <h1>Ny Order</h1>
             </header>
             <div class="searchbar">
-                <input type="text" placeholder="Sök">
+                <input type="text" placeholder="Sök" id="orderSearch">
             </div>
             <nav>
                 <div class="nav-buttons">
-                    <p class="selected order-nav-button">Pizzor</p>
-                    <p class="order-nav-button">Dryck</p>
-                    <p class="order-nav-button">Såser</p>
+                    <p class="selected order-nav-button" id="pizza">Pizzor</p>
+                    <p class="order-nav-button" id="drinks">Dryck</p>
+                    <p class="order-nav-button" id="sauces">Såser</p>
                 </div>
                 <div class="nav-slider">
                     <div class="nav-bar"></div>
@@ -45,100 +58,24 @@
             <div class="order-menu">
                 <div class="pizzas menu-active">
                     <ul class="pizza-list">
-                        <li>
-                            <h2>Pizzors Klass 1</h2>
-                        </li>
-                        <li>
-                            <p> Margherita</p>
-                            <p>65 :-</p>
-                        </li>
-                        <li>
-                            <p> Margherita</p>
-                            <p>65 :-</p>
-                        </li>
-                        <li>
-                            <p> Margherita</p>
-                            <p>65 :-</p>
-                        </li>
-                        <li>
-                            <p> Margherita</p>
-                            <p>65 :-</p>
-                        </li>
-                        <li>
-                            <p> Margherita</p>
-                            <p>65 :-</p>
-                        </li>
-                        <li>
-                            <p> Margherita</p>
-                            <p>65 :-</p>
-                        </li>
-                        <li>
-                            <p> Margherita</p>
-                            <p>65 :-</p>
-                        </li>
-                        <li>
-                            <p> Margherita</p>
-                            <p>65 :-</p>
-                        </li>
-                        <li>
-                            <p> Margherita</p>
-                            <p>65 :-</p>
-                        </li>
-                        <li>
-                            <p> Margherita</p>
-                            <p>65 :-</p>
-                        </li>
-                        <li>
-                            <p> Margherita</p>
-                            <p>65 :-</p>
-                        </li>
-                        <li>
-                            <p> Margherita</p>
-                            <p>65 :-</p>
-                        </li>
+                        
                     </ul>
                 </div>
-                <div class="soda menu-left">
+                <div class="soda menu-right">
                     <ul class="soda-list">
-                        <li>
-                            <p>
-                                Coca-Cola 33cl
-                            </p>
-                            <p>
-                                15,00 :-
-                            </p>
-                        </li>
-                        <li>
-                            <p>Coca-Cola Light 33cl</p>
-                            <p>15,00 :-</p>
-                        </li>
-                        <li>
-                            <p>Fanta 33cl</p>
-                            <p>15,00 :-</p>
-                        </li>
-                        <li>
-                            <p>Sprite 33cl</p>
-                            <p>15,00 :-</p>
-                        </li>
+                        
                     </ul>
                 </div>
-                <div class="sauces menu-left">
+                <div class="sauces menu-right">
                     <ul class="sauces-list">
-                        <li>
-                            <p>Bearnaisesås 10cl</p>
-                            <p>10,00 :-</p>
-                        </li>
-                        <li>
-                            <p>Kebabsås mild 10cl</p>
-                            <p>10,00 :-</p>
-                        </li>
+                        
                     </ul>
                 </div>
             </div>
             <div class="order-total">
                 <div class="order-amount">
                     <p>Totalt:</p>
-                    <p>130,00 :-</p>
+                    <p>0,00 :-</p>
                 </div>
                 <div class="order-buttons">
                     <button class="button-secondary">Info</button>

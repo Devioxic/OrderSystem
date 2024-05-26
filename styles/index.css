@@ -14,6 +14,10 @@ body {
     font-family: 'Inter';
 }
 
+.hidden {
+    display: none !important;
+}
+
 .container {
     position: relative;
     width: 100%;
@@ -84,6 +88,77 @@ button {
     color: var(--primary);
     border: 2px solid var(--primary);
 }
+
+.button-danger {
+    background-color: var(--secondary);
+    color: var(--background);
+    border: none;
+}
+
+.smol-button {
+    height: 2.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    margin: 0.5rem;
+    font-size: 1rem;
+}
+
+.confirm-dialog {
+    position: absolute;
+    height: 18rem;
+    width: 80%;
+    top: 10rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    border: 1px solid var(--primary);
+    border-radius: 15px;
+    background-color: var(--background);
+    z-index: 2;
+}
+
+.confirm-head {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0 1rem;
+    text-align: center;
+}
+
+.confirm-head h2 {
+    margin: 0;
+}
+
+.confirm-head p {
+    margin: 0.5rem 0;
+}
+
+.confirm-extraInfo {
+    width: 100%;
+    margin: 1rem 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.confirm-extraInfo textarea {
+    width: 90%;
+    height: 8rem;
+    border-radius: 12px;
+    padding: 0.5rem;
+    background-color: var(--searchbar);
+    border: none;
+}
+
+.confirm-buttons {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+}
+
 .order, .historik, .kvitto {
     width: 100%;
     display: flex;
@@ -163,9 +238,8 @@ nav {
 .nav-bar {
     position: absolute;
     height: 3px;
-    width: 3.5rem;
     background-color: var(--primary);
-    border-radius: 1px;
+    border-radius: 10px;
 }
 
 .order-total {
@@ -200,7 +274,8 @@ nav {
 .order-menu {
     position: relative;
     width: 100%;
-    height: calc(100% - 18rem);
+    height: calc(100% - 18.5rem);
+    margin-top: 0.5rem;
     margin-bottom: 8rem;
     display: flex;
     flex-direction: column;
@@ -225,14 +300,15 @@ nav {
 
 .menu-active {
     left: 0;
+    transition: left 0.3s ease-in-out;
 }
 
 .menu-left {
-    left: 100%;
+    left: -100%;
 }
 
 .menu-right {
-    left: -100%;
+    left: 100%;
 }
 
 .pizza-list li, .soda-list li, .sauces-list li {
