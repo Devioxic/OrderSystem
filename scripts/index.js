@@ -66,10 +66,61 @@ const soda = document.querySelector(".soda");
 
 const orderSearch = document.getElementById("orderSearch");
 
+const confirmDialog = document.querySelector(".confirm-dialog");
+const confirmDialogConfirm = confirmDialog.querySelector(".button-primary");
+const confirmDialogCancel = confirmDialog.querySelector(".button-danger");
+
 let previousPage = null;
 let currentPage = homeDiv;
 let activeButton = document.querySelector(".selected");
 let activeSection = document.querySelector(".menu-active");
+let currentOrder = [];
+
+/*
+currentOrder = [
+    {
+        "name": "Margherita",
+        "price": 65,
+        "specialInstructions": "Ingen ost"
+    },
+    {
+        "name": "Coca-Cola 33 cl",
+        "price": 15,
+        "specialInstructions": "Ingen is"
+    }
+];
+*/
+
+confirmDialogConfirm.addEventListener("click", () => {
+    confirmDialog.classList.add("hidden");
+    currentOrder.push(
+        {
+            "name": confirmDialog.querySelector("h2").textContent,
+            "price": findMenuItem(confirmDialog.querySelector("h2").textContent).price,
+            "specialInstructions": confirmDialog.querySelector("textarea").value
+        }
+    );
+});
+
+confirmDialogCancel.addEventListener("click", () => {
+    confirmDialog.classList.add("hidden");
+});
+
+function findMenuItem(item) {
+    const pizzas = menu.pizza_class_1.concat(menu.pizza_class_2, menu.pizza_class_3);
+    const sauces = menu.sauces;
+    const drinks = menu.drinks;
+
+    const allItems = pizzas.concat(sauces, drinks);
+
+    for (let i = 0; i < allItems.length; i++) {
+        if (allItems[i].name === item) {
+            return allItems[i];
+        }
+    }
+
+    return null;
+}
 
 function searchForThing(list, search) { // Searches for a p tag containing the search string
     list.querySelectorAll("p").forEach(p => {
@@ -100,6 +151,8 @@ function createMenuElement(item) {
 
     li.appendChild(name);
     li.appendChild(price);
+
+    li.classList.add("menu-item");
 
     return li;
 }
@@ -163,6 +216,29 @@ function loadMenu() {
     menu.drinks.forEach(drink => {
         sodaUl.appendChild(createMenuElement(drink));
     });
+
+    document.querySelectorAll(".menu-item").forEach(item => {
+        item.addEventListener("click", () => {
+            const itemName = item.querySelector("p").textContent;
+            const menuItem = findMenuItem(itemName);
+            
+            const dialogName = confirmDialog.querySelector("h2");
+            const dialogContents = confirmDialog.querySelector("p");
+
+            dialogName.textContent = menuItem.name;
+
+            let contents = "";
+            menuItem.contents.forEach(content => {
+                contents += `${content}, `;
+            });
+
+            contents = contents.slice(0, -2);
+
+            dialogContents.textContent = contents;
+
+            confirmDialog.classList.remove("hidden");
+        });
+    });
 }
 
 newOrderButton.addEventListener("click", () => {
@@ -187,12 +263,40 @@ historyButton.addEventListener("click", () => {
     currentPage = historyDiv;
 });
 
+function removeAllClasses(element) {
+    element.className = "";
+}
+
+function resetOrderSection() {
+    activeButton.classList.remove("selected");
+
+    activeSection = pizzas;
+    activeButton = document.querySelector("#pizza");
+    activeButton.classList.add("selected");
+    
+    removeAllClasses(activeSection);
+    activeSection.classList.add("menu-active");
+    activeSection.classList.add("pizzas");
+
+    removeAllClasses(soda);
+    soda.classList.add("menu-right");
+    soda.classList.add("soda");
+
+    removeAllClasses(sauces);
+    sauces.classList.add("menu-right");
+    sauces.classList.add("sauces");
+
+    updateNavBarPosition(false);
+}
+
 backButtons.forEach(button => {
     button.addEventListener("click", () => {
         currentPage.classList.add("page-right");
         currentPage.classList.remove("active");
         previousPage.classList.add("active");
         previousPage.classList.remove("page-left");
+
+        resetOrderSection();
 
         currentPage = previousPage;
     });
